@@ -1,0 +1,249 @@
+# TanStack Starter
+
+A modern full-stack web application starter template built with React, TanStack Router, TanStack Form, and PostgreSQL.
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v18+)
+- PostgreSQL database
+- Environment variables configured
+
+### Installation
+
+```bash
+npm install
+```
+
+### Environment Setup
+
+Create a `.env.local` file with the following variables:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/tanstack-starter"
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+The application will start on `http://localhost:4000`
+
+## Building For Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── routes/              # File-based routing with TanStack Router
+│   ├── __root.tsx      # Root layout
+│   ├── index.tsx       # Home page
+│   ├── _auth/          # Auth layout
+│   │   ├── login/
+│   │   └── signup/
+│   ├── dashboard/      # Protected dashboard
+│   │   ├── index.tsx
+│   │   ├── discover.tsx
+│   │   ├── import.tsx
+│   │   └── items/
+│   └── posts/
+├── components/         # React components
+│   ├── ui/            # Reusable UI components (shadcn/ui)
+│   └── web/           # Application-specific components
+├── lib/               # Utilities and configurations
+│   ├── auth.ts        # Better Auth setup
+│   └── theme-provider.tsx
+├── db/                # Database configuration
+│   ├── schema.ts      # Drizzle ORM schema
+│   └── auth-schema.ts # Authentication tables
+└── styles/            # Global styles
+```
+
+## 🔐 Authentication
+
+The application uses **Better Auth** with support for:
+
+- **Email & Password** authentication
+- **Google OAuth** (configured)
+- Session management with token-based auth
+- Email verification
+
+### Authentication Flow
+
+1. Users can sign up with email/password or Google OAuth
+2. Sessions are stored in the database
+3. Protected routes require valid authentication
+4. Dashboard routes are accessible only to authenticated users
+
+## 📦 Technology Stack
+
+### Frontend
+- **React 19** - UI library
+- **TanStack Router** - File-based routing with SSR support
+- **TanStack React Form** - Form state management
+- **Tailwind CSS 4** - Utility-first styling
+- **shadcn/ui** - Pre-built UI components
+- **Sonner** - Toast notifications
+- **Lucide React** - Icon library
+
+### Backend & Database
+- **Nitro** - Server framework
+- **Drizzle ORM** - Type-safe database queries
+- **PostgreSQL** - Database
+- **Better Auth** - Authentication
+
+### Development Tools
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Vitest** - Testing framework
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+
+## 📝 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server on port 4000 |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm test` | Run tests with Vitest |
+| `npm run lint` | Run ESLint checks |
+| `npm run format` | Format code with Prettier |
+| `npm run check` | Lint and format in fix mode |
+| `npm run db:generate` | Generate database migrations |
+| `npm run db:migrate` | Run database migrations |
+| `npm run db:push` | Push schema to database |
+| `npm run db:pull` | Pull schema from database |
+| `npm run db:studio` | Open Drizzle Studio |
+
+## 🗄️ Database Schema
+
+### Authentication Tables
+- **user** - User profiles and metadata
+- **session** - User sessions with expiration
+- **account** - OAuth and password accounts
+- **verification** - Email verification tokens
+
+### Application Tables
+- **todos** - Example todo items
+
+
+
+## 🎨 Styling
+
+The project uses **Tailwind CSS 4** with the Vite integration for optimized builds. UI components are sourced from **shadcn/ui** and customized via `components.json`.
+
+## 🧪 Testing
+
+Run tests with Vitest:
+
+```bash
+npm run test
+```
+
+## 📋 Code Quality
+
+### Linting & Formatting
+
+```bash
+# Check for issues
+npm run lint
+
+# Format code
+npm run format
+
+# Fix all issues
+npm run check
+```
+
+The project uses:
+- **ESLint** with TanStack config
+- **Prettier** for code formatting
+- **TypeScript strict mode** for type safety
+
+## 🔗 Key Routes
+
+| Route | Purpose |
+|-------|---------|
+| `/` | Home page |
+| `/login` | User login |
+| `/signup` | User registration |
+| `/dashboard` | Protected dashboard |
+| `/dashboard/discover` | Discover content |
+| `/dashboard/import` | Import content |
+| `/dashboard/items` | Browse imported items |
+| `/posts` | Blog posts |
+
+## 🛠️ Development
+
+### Adding a New Route
+
+Create a new file in `src/routes/`:
+
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/my-route')({
+  component: MyComponent,
+})
+
+function MyComponent() {
+  return <div>My Route Content</div>
+}
+```
+
+TanStack Router automatically generates the route configuration.
+
+### Adding UI Components
+
+Use shadcn/ui components from `src/components/ui/`:
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+
+export function MyComponent() {
+  return (
+    <Card>
+      <Button>Click me</Button>
+    </Card>
+  )
+}
+```
+
+### Database Queries
+
+Use Drizzle ORM for type-safe queries:
+
+```typescript
+import { db } from '@/db'
+import { todos } from '@/db/schema'
+
+const allTodos = await db.select().from(todos)
+```
+
+## 📚 Resources
+
+- [TanStack Router Documentation](https://tanstack.com/router)
+- [Drizzle ORM Documentation](https://orm.drizzle.team/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/)
+- [Better Auth Documentation](https://www.better-auth.com/)
+- [shadcn/ui Components](https://ui.shadcn.com/)
+
+## 📝 License
+
+This project is part of the TanStack ecosystem.
