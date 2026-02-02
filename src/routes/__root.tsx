@@ -18,7 +18,8 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'AI Crawler',
+        title: 'TanStack Starter',
+        description: 'A starter template for building applications with TanStack Router, React, and more.',
       },
     ],
     links: [

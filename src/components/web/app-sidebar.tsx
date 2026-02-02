@@ -69,12 +69,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Link to="/dashboard" className="flex items-center gap-3">
-                                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <BotIcon className="size-4" />
+                                <div className="relative bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full">
+                                    <img
+                                        src='https://res.cloudinary.com/dg3gyk0gu/image/upload/v1683914713/tags/tanstack.png'
+                                        alt='TanStack Logo'
+                                        className='w-full h-full object-cover'
+                                    />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-medium">AI Crawler</span>
-                                    <span className="truncate text-xs">Your AI knowledge base</span>
+                                    <span className="truncate font-medium">TanStack Starter</span>
+                                    <span className="truncate text-xs">Tanstack ecosystem starter kit</span>
                                 </div>
                             </Link>
                         </SidebarMenuButton>

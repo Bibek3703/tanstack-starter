@@ -24,8 +24,8 @@ export function Navbar() {
     return (
         <nav className='sticky top-0 w-full p-4 flex items-center bg-background/80 backdrop-blur-sm border-b border-b-muted/20 z-50'>
             <div className='w-auto flex items-center gap-2'>
-                <BotIcon />
-                <span className='font-medium text-lg'>AI Crawler</span>
+                <img src='https://res.cloudinary.com/dg3gyk0gu/image/upload/v1683914713/tags/tanstack.png' alt='TanStack Logo' className='w-8 h-8' />
+                <span className='font-medium text-lg'>TanStack Starter</span>
             </div>
             <div className='flex-1 flex justify-end gap-3 items-center'>
                 <ModeToggle />
