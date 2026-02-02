@@ -1,9 +1,6 @@
-"use client"
-
 import * as React from "react"
 import {
     BookmarkIcon,
-    BotIcon,
     CompassIcon,
     ImportIcon,
 } from "lucide-react"
@@ -21,46 +18,35 @@ import {
 } from "@/components/ui/sidebar"
 import { Link, linkOptions } from "@tanstack/react-router"
 import NavPrimary, { NavPrimaryItemType } from "./nav-primary"
+import { type User } from "better-auth"
 
 
+const navItems: NavPrimaryItemType[] = linkOptions([
+    {
+        title: "Items",
+        to: "/dashboard/items",
+        icon: BookmarkIcon,
+        activeOptions: { exact: false },
+    },
+    {
+        title: "Import",
+        to: "/dashboard/import",
+        icon: ImportIcon,
+        activeOptions: { exact: false },
+    },
+    {
+        title: "Discover",
+        to: "/dashboard/discover",
+        icon: CompassIcon,
+        activeOptions: { exact: false },
+    },
+])
 
-export type NavUserType = {
-    name: string
-    email: string
-    avatar: string
-}
 
-const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    } as NavUserType,
-    navPrimary: linkOptions([
-        {
-            title: "Items",
-            to: "/dashboard/items",
-            icon: BookmarkIcon,
-            activeOptions: { exact: false },
-        },
-        {
-            title: "Import",
-            to: "/dashboard/import",
-            icon: ImportIcon,
-            activeOptions: { exact: false },
-        },
-        {
-            title: "Discover",
-            to: "/dashboard/discover",
-            icon: CompassIcon,
-            activeOptions: { exact: false },
-        },
-    ]) as NavPrimaryItemType[],
-}
+export function AppSidebar({ user }: { user: User }) {
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar collapsible="icon">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -86,10 +72,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavPrimary navs={data.navPrimary} />
+                <NavPrimary navs={navItems} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user} />
+                <NavUser user={user} />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

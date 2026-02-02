@@ -8,17 +8,19 @@ import {
     FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Link, useNavigate } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import { useForm } from "@tanstack/react-form"
 import { signupSchema } from "@/schemas/auth"
-import { authClient } from "@/lib/auth-client"
-import { toast } from "sonner"
+import useAuth from "@/hooks/use-auth"
+import { Loader2Icon } from "lucide-react"
+import React from "react"
 
 export function SignupForm({
     className,
     ...props
 }: React.ComponentProps<"form">) {
-    const navigate = useNavigate()
+    const { handleSignUp } = useAuth()
+    const [isPending, startTransition] = React.useTransition()
 
     const form = useForm({
         defaultValues: {
@@ -29,22 +31,9 @@ export function SignupForm({
         validators: {
             onSubmit: signupSchema
         },
-        onSubmit: async ({ value }) => {
-            if (!value) return
-            await authClient.signUp.email({
-                name: value.fullName,
-                email: value.email,
-                password: value.password,
-                // callbackURL: "/dashboard",
-                fetchOptions: {
-                    onSuccess: () => {
-                        toast.success("Signup successful! Please check your email to verify your account.")
-                        navigate({ to: "/" })
-                    },
-                    onError: (error) => {
-                        toast.error(`Signup failed: ${error instanceof Error ? error.message : "Something went wrong."}`)
-                    }
-                }
+        onSubmit: ({ value }) => {
+            startTransition(async () => {
+                handleSignUp(value)
             })
         }
     })
@@ -140,22 +129,13 @@ export function SignupForm({
                         Must be at least 8 characters long.
                     </FieldDescription>
                 </Field>
-                <Field >
-                    <form.Subscribe
-                        selector={(state) => [state.canSubmit, state.isSubmitting]}
-                        children={(state: any) => {
-                            const [canSubmit, isSubmitting] = state as [boolean, boolean]
-                            return (
-                                <Button type="submit" variant="secondary" size="lg" disabled={!canSubmit || isSubmitting} className="cursor-pointer">
-                                    {isSubmitting ? "Loading" : "Create Account"}
-                                </Button>
-                            )
-                        }}
-                    />
-                    <FieldDescription className="text-center">
-                        Already have an account? <Link to="/login">Sign in</Link>
-                    </FieldDescription>
-                </Field>
+                <Button type="submit" variant="secondary" size="lg" disabled={isPending} className="cursor-pointer">
+                    {isPending && <Loader2Icon className="animate-spin" />}
+                    Login
+                </Button>
+                <FieldDescription className="text-center">
+                    Already have an account? <Link to="/login">Sign in</Link>
+                </FieldDescription>
             </FieldGroup>
         </form>
     )

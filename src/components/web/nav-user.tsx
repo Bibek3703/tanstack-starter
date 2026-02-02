@@ -1,12 +1,6 @@
-"use client"
-
 import {
-    BadgeCheck,
-    Bell,
     ChevronsUpDown,
-    CreditCard,
     LogOut,
-    Sparkles,
 } from "lucide-react"
 
 import {
@@ -20,7 +14,6 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -29,17 +22,18 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
+import useAuth from "@/hooks/use-auth"
+import { type User } from "better-auth"
+import { getAvatarColor } from "@/lib/auth-helpers"
 
-export function NavUser({
-    user,
-}: {
-    user: {
-        name: string
-        email: string
-        avatar: string
-    }
-}) {
+
+interface NavUserProps {
+    user: User
+}
+
+export function NavUser({ user }: NavUserProps) {
     const { isMobile } = useSidebar()
+    const { handleSignOut } = useAuth()
 
     return (
         <SidebarMenu>
@@ -51,7 +45,7 @@ export function NavUser({
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarImage src={user.avatar} alt={user.name} />
+                                <AvatarImage src={user?.image || `https://api.dicebear.com/9.x/initials/svg?backgroundColor=${getAvatarColor(user.name)}&seed=${user.name}`} alt={user.name} />
                                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
@@ -71,7 +65,7 @@ export function NavUser({
                             <DropdownMenuLabel className="p-0 font-normal">
                                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                     <Avatar className="h-8 w-8 rounded-lg">
-                                        <AvatarImage src={user.avatar} alt={user.name} />
+                                        <AvatarImage src={user?.image || `https://api.dicebear.com/9.x/initials/svg?backgroundColor=${getAvatarColor(user.name)}&seed=${user.name}`} alt={user.name || "User"} />
                                         <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                                     </Avatar>
                                     <div className="grid flex-1 text-left text-sm leading-tight">
@@ -80,7 +74,7 @@ export function NavUser({
                                     </div>
                                 </div>
                             </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
+                            {/* <DropdownMenuSeparator />
                             <DropdownMenuItem>
                                 <BadgeCheck />
                                 Account
@@ -93,8 +87,10 @@ export function NavUser({
                                 <Bell />
                                 Notifications
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
+                            <DropdownMenuSeparator /> */}
+                            <DropdownMenuItem
+                                onClick={() => handleSignOut()}
+                            >
                                 <LogOut />
                                 Log out
                             </DropdownMenuItem>

@@ -9,17 +9,19 @@ import {
     FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Link, useNavigate } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import { useForm } from "@tanstack/react-form"
 import { loginSchema } from "@/schemas/auth"
-import { authClient } from "@/lib/auth-client"
-import { toast } from "sonner"
+import useAuth from "@/hooks/use-auth"
+import { Loader2Icon } from "lucide-react"
+import React from "react"
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<"form">) {
-    const navigate = useNavigate()
+    const { handleSignIn } = useAuth()
+    const [isPending, startTransition] = React.useTransition()
     const form = useForm({
         defaultValues: {
             email: "",
@@ -28,22 +30,9 @@ export function LoginForm({
         validators: {
             onSubmit: loginSchema
         },
-        onSubmit: async ({ value }) => {
-            if (!value) return
-            await authClient.signIn.email({
-                email: value.email,
-                password: value.password,
-                // callbackURL: "/dashboard",
-                fetchOptions: {
-                    onSuccess: () => {
-                        toast.success("Signin successful! You are now logged in.")
-                        navigate({ to: "/" })
-                    },
-                    onError: ({ error }) => {
-                        console.log({ error })
-                        toast.error(`Signin failed: ${error.message || "Something went wrong."}`)
-                    }
-                }
+        onSubmit: ({ value }) => {
+            startTransition(async () => {
+                await handleSignIn(value)
             })
         }
     })
@@ -53,6 +42,7 @@ export function LoginForm({
         <form
             onSubmit={(e) => {
                 e.preventDefault()
+                e.stopPropagation()
                 form.handleSubmit()
             }}
             className={cn("", className)} {...props}
@@ -142,22 +132,15 @@ export function LoginForm({
                         }}
                     />
                 </Field>
-                <Field>
-                    <form.Subscribe
-                        selector={(state) => [state.canSubmit, state.isSubmitting]}
-                        children={(state: any) => {
-                            const [canSubmit, isSubmitting] = state as [boolean, boolean]
-                            return (
-                                <Button type="submit" variant="secondary" size="lg" disabled={!canSubmit || isSubmitting} className="cursor-pointer">
-                                    {isSubmitting ? "Loading" : "Login"}
-                                </Button>
-                            )
-                        }}
-                    />
-                    <FieldDescription className="text-center">
-                        Don&apos;t have an account? <Link to="/signup">Sign up</Link>
-                    </FieldDescription>
-                </Field>
+
+                <Button type="submit" variant="secondary" size="lg" disabled={isPending} className="cursor-pointer">
+                    {isPending && <Loader2Icon className="animate-spin" />}
+                    Login
+                </Button>
+
+                <FieldDescription className="text-center">
+                    Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+                </FieldDescription>
             </FieldGroup>
         </form>
     )

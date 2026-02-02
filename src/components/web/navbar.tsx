@@ -1,25 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import ModeToggle from './mode-toggle'
-import { BotIcon } from 'lucide-react'
 import { Button, buttonVariants } from '../ui/button'
 import { authClient } from '@/lib/auth-client'
-import { toast } from 'sonner'
+import useAuth from '@/hooks/use-auth'
 
 export function Navbar() {
     const { data: session, isPending } = authClient.useSession()
-
-    const handleSignOut = async () => {
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    toast.success("You have been logged out.")
-                },
-                onError: ({ error }) => {
-                    toast.error(`Logout failed: ${error.message || "Something went wrong."}`)
-                }
-            }
-        })
-    }
+    const { handleSignOut } = useAuth()
 
     return (
         <nav className='sticky top-0 w-full p-4 flex items-center bg-background/80 backdrop-blur-sm border-b border-b-muted/20 z-50'>
