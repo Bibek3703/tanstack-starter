@@ -1,4 +1,4 @@
-import { sendPasswordResetEmail, sendVerificationLinkEmail } from "@/data/email";
+import { sendChangeEmailConfirmationEmail, sendDeleteAccountVerificationEmail, sendPasswordResetEmail, sendVerificationLinkEmail } from "@/data/email";
 import { db } from "@/db";
 import { betterAuth, type User } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -9,6 +9,32 @@ export const auth = betterAuth({
         provider: "pg",
     }),
     plugins: [tanstackStartCookies()],
+    user: {
+        changeEmail: {
+            enabled: true,
+            sendChangeEmailConfirmation: async ({ user, url }: { user: User; url: string; token: string }) => {
+                void sendChangeEmailConfirmationEmail({
+                    data: {
+                        email: user.email,
+                        name: user.name,
+                        url
+                    }
+                })
+            }
+        },
+        deleteUser: {
+            enabled: true,
+            sendDeleteAccountVerification: async ({ user, url }: { user: User; url: string; token: string }) => {
+                void sendDeleteAccountVerificationEmail({
+                    data: {
+                        email: user.email,
+                        name: user.name,
+                        url
+                    }
+                })
+            }
+        }
+    },
     emailVerification: {
         sendOnSignUp: true,
         autoSignInAfterVerification: true,

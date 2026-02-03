@@ -14,10 +14,10 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
-import { Route as DashboardImportRouteImport } from './routes/dashboard/import'
-import { Route as DashboardDiscoverRouteImport } from './routes/dashboard/discover'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard/settings'
+import { Route as DashboardProfileRouteImport } from './routes/dashboard/profile'
 import { Route as PostsPostIdIndexRouteImport } from './routes/posts/$postId/index'
-import { Route as DashboardItemsIndexRouteImport } from './routes/dashboard/items/index'
+import { Route as DashboardTodosIndexRouteImport } from './routes/dashboard/todos/index'
 import { Route as AuthSignupIndexRouteImport } from './routes/_auth/signup/index'
 import { Route as AuthResetPasswordIndexRouteImport } from './routes/_auth/reset-password/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
@@ -49,14 +49,14 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
-const DashboardImportRoute = DashboardImportRouteImport.update({
-  id: '/import',
-  path: '/import',
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
-const DashboardDiscoverRoute = DashboardDiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
 const PostsPostIdIndexRoute = PostsPostIdIndexRouteImport.update({
@@ -64,9 +64,9 @@ const PostsPostIdIndexRoute = PostsPostIdIndexRouteImport.update({
   path: '/posts/$postId/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardItemsIndexRoute = DashboardItemsIndexRouteImport.update({
-  id: '/items/',
-  path: '/items/',
+const DashboardTodosIndexRoute = DashboardTodosIndexRouteImport.update({
+  id: '/todos/',
+  path: '/todos/',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
 const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
@@ -103,8 +103,8 @@ const PostsPostIdEditIndexRoute = PostsPostIdEditIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteRouteWithChildren
-  '/dashboard/discover': typeof DashboardDiscoverRoute
-  '/dashboard/import': typeof DashboardImportRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -112,14 +112,14 @@ export interface FileRoutesByFullPath {
   '/login/': typeof AuthLoginIndexRoute
   '/reset-password/': typeof AuthResetPasswordIndexRoute
   '/signup/': typeof AuthSignupIndexRoute
-  '/dashboard/items/': typeof DashboardItemsIndexRoute
+  '/dashboard/todos/': typeof DashboardTodosIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
   '/posts/$postId/edit/': typeof PostsPostIdEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard/discover': typeof DashboardDiscoverRoute
-  '/dashboard/import': typeof DashboardImportRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard': typeof DashboardIndexRoute
   '/posts': typeof PostsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -127,7 +127,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginIndexRoute
   '/reset-password': typeof AuthResetPasswordIndexRoute
   '/signup': typeof AuthSignupIndexRoute
-  '/dashboard/items': typeof DashboardItemsIndexRoute
+  '/dashboard/todos': typeof DashboardTodosIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
   '/posts/$postId/edit': typeof PostsPostIdEditIndexRoute
 }
@@ -136,8 +136,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/dashboard': typeof DashboardRouteRouteWithChildren
-  '/dashboard/discover': typeof DashboardDiscoverRoute
-  '/dashboard/import': typeof DashboardImportRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -145,7 +145,7 @@ export interface FileRoutesById {
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_auth/reset-password/': typeof AuthResetPasswordIndexRoute
   '/_auth/signup/': typeof AuthSignupIndexRoute
-  '/dashboard/items/': typeof DashboardItemsIndexRoute
+  '/dashboard/todos/': typeof DashboardTodosIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
   '/posts/$postId/edit/': typeof PostsPostIdEditIndexRoute
 }
@@ -154,8 +154,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
-    | '/dashboard/discover'
-    | '/dashboard/import'
+    | '/dashboard/profile'
+    | '/dashboard/settings'
     | '/dashboard/'
     | '/posts/'
     | '/api/auth/$'
@@ -163,14 +163,14 @@ export interface FileRouteTypes {
     | '/login/'
     | '/reset-password/'
     | '/signup/'
-    | '/dashboard/items/'
+    | '/dashboard/todos/'
     | '/posts/$postId/'
     | '/posts/$postId/edit/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard/discover'
-    | '/dashboard/import'
+    | '/dashboard/profile'
+    | '/dashboard/settings'
     | '/dashboard'
     | '/posts'
     | '/api/auth/$'
@@ -178,7 +178,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
-    | '/dashboard/items'
+    | '/dashboard/todos'
     | '/posts/$postId'
     | '/posts/$postId/edit'
   id:
@@ -186,8 +186,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth'
     | '/dashboard'
-    | '/dashboard/discover'
-    | '/dashboard/import'
+    | '/dashboard/profile'
+    | '/dashboard/settings'
     | '/dashboard/'
     | '/posts/'
     | '/api/auth/$'
@@ -195,7 +195,7 @@ export interface FileRouteTypes {
     | '/_auth/login/'
     | '/_auth/reset-password/'
     | '/_auth/signup/'
-    | '/dashboard/items/'
+    | '/dashboard/todos/'
     | '/posts/$postId/'
     | '/posts/$postId/edit/'
   fileRoutesById: FileRoutesById
@@ -247,18 +247,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
-    '/dashboard/import': {
-      id: '/dashboard/import'
-      path: '/import'
-      fullPath: '/dashboard/import'
-      preLoaderRoute: typeof DashboardImportRouteImport
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
-    '/dashboard/discover': {
-      id: '/dashboard/discover'
-      path: '/discover'
-      fullPath: '/dashboard/discover'
-      preLoaderRoute: typeof DashboardDiscoverRouteImport
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
     '/posts/$postId/': {
@@ -268,11 +268,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard/items/': {
-      id: '/dashboard/items/'
-      path: '/items'
-      fullPath: '/dashboard/items/'
-      preLoaderRoute: typeof DashboardItemsIndexRouteImport
+    '/dashboard/todos/': {
+      id: '/dashboard/todos/'
+      path: '/todos'
+      fullPath: '/dashboard/todos/'
+      preLoaderRoute: typeof DashboardTodosIndexRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
     '/_auth/signup/': {
@@ -339,17 +339,17 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 )
 
 interface DashboardRouteRouteChildren {
-  DashboardDiscoverRoute: typeof DashboardDiscoverRoute
-  DashboardImportRoute: typeof DashboardImportRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
-  DashboardItemsIndexRoute: typeof DashboardItemsIndexRoute
+  DashboardTodosIndexRoute: typeof DashboardTodosIndexRoute
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
-  DashboardDiscoverRoute: DashboardDiscoverRoute,
-  DashboardImportRoute: DashboardImportRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
-  DashboardItemsIndexRoute: DashboardItemsIndexRoute,
+  DashboardTodosIndexRoute: DashboardTodosIndexRoute,
 }
 
 const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(

@@ -3,6 +3,9 @@ import {
     BookmarkIcon,
     CompassIcon,
     ImportIcon,
+    LayoutDashboardIcon,
+    Settings2,
+    User2Icon,
 } from "lucide-react"
 
 import { NavUser } from "@/components/web/nav-user"
@@ -23,21 +26,27 @@ import { type User } from "better-auth"
 
 const navItems: NavPrimaryItemType[] = linkOptions([
     {
-        title: "Items",
-        to: "/dashboard/items",
+        title: "Dashboard",
+        to: "/dashboard",
+        icon: LayoutDashboardIcon,
+        activeOptions: { exact: true },
+    },
+    {
+        title: "Todos",
+        to: "/dashboard/todos",
         icon: BookmarkIcon,
         activeOptions: { exact: false },
     },
     {
-        title: "Import",
-        to: "/dashboard/import",
-        icon: ImportIcon,
+        title: "Profile",
+        to: "/dashboard/profile",
+        icon: User2Icon,
         activeOptions: { exact: false },
     },
     {
-        title: "Discover",
-        to: "/dashboard/discover",
-        icon: CompassIcon,
+        title: "Settings",
+        to: "/dashboard/settings",
+        icon: Settings2,
         activeOptions: { exact: false },
     },
 ])
