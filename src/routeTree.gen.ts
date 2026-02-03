@@ -14,7 +14,6 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
-import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
 import { Route as DashboardImportRouteImport } from './routes/dashboard/import'
 import { Route as DashboardDiscoverRouteImport } from './routes/dashboard/discover'
 import { Route as PostsPostIdIndexRouteImport } from './routes/posts/$postId/index'
@@ -23,15 +22,8 @@ import { Route as AuthSignupIndexRouteImport } from './routes/_auth/signup/index
 import { Route as AuthResetPasswordIndexRouteImport } from './routes/_auth/reset-password/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
-import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
-import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
-import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as PostsPostIdEditIndexRouteImport } from './routes/posts/$postId/edit/index'
-import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
-import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
-import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
-import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
 const DashboardRouteRoute = DashboardRouteRouteImport.update({
   id: '/dashboard',
@@ -56,11 +48,6 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRouteRoute,
-} as any)
-const DemoDrizzleRoute = DemoDrizzleRouteImport.update({
-  id: '/demo/drizzle',
-  path: '/demo/drizzle',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardImportRoute = DashboardImportRouteImport.update({
   id: '/import',
@@ -102,21 +89,6 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
-const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
-  id: '/demo/start/server-funcs',
-  path: '/demo/start/server-funcs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartApiRequestRoute = DemoStartApiRequestRouteImport.update({
-  id: '/demo/start/api-request',
-  path: '/demo/start/api-request',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
-  id: '/demo/api/names',
-  path: '/demo/api/names',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -127,72 +99,36 @@ const PostsPostIdEditIndexRoute = PostsPostIdEditIndexRouteImport.update({
   path: '/posts/$postId/edit/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
-  id: '/demo/start/ssr/',
-  path: '/demo/start/ssr/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrSpaModeRoute = DemoStartSsrSpaModeRouteImport.update({
-  id: '/demo/start/ssr/spa-mode',
-  path: '/demo/start/ssr/spa-mode',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrFullSsrRoute = DemoStartSsrFullSsrRouteImport.update({
-  id: '/demo/start/ssr/full-ssr',
-  path: '/demo/start/ssr/full-ssr',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
-  id: '/demo/start/ssr/data-only',
-  path: '/demo/start/ssr/data-only',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/dashboard/discover': typeof DashboardDiscoverRoute
   '/dashboard/import': typeof DashboardImportRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/login/': typeof AuthLoginIndexRoute
   '/reset-password/': typeof AuthResetPasswordIndexRoute
   '/signup/': typeof AuthSignupIndexRoute
   '/dashboard/items/': typeof DashboardItemsIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
   '/posts/$postId/edit/': typeof PostsPostIdEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard/discover': typeof DashboardDiscoverRoute
   '/dashboard/import': typeof DashboardImportRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
   '/dashboard': typeof DashboardIndexRoute
   '/posts': typeof PostsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/reset-password': typeof AuthResetPasswordIndexRoute
   '/signup': typeof AuthSignupIndexRoute
   '/dashboard/items': typeof DashboardItemsIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
   '/posts/$postId/edit': typeof PostsPostIdEditIndexRoute
 }
 export interface FileRoutesById {
@@ -202,23 +138,15 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/dashboard/discover': typeof DashboardDiscoverRoute
   '/dashboard/import': typeof DashboardImportRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_auth/reset-password/': typeof AuthResetPasswordIndexRoute
   '/_auth/signup/': typeof AuthSignupIndexRoute
   '/dashboard/items/': typeof DashboardItemsIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
   '/posts/$postId/edit/': typeof PostsPostIdEditIndexRoute
 }
 export interface FileRouteTypes {
@@ -228,46 +156,30 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/discover'
     | '/dashboard/import'
-    | '/demo/drizzle'
     | '/dashboard/'
     | '/posts/'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/forgot-password/'
     | '/login/'
     | '/reset-password/'
     | '/signup/'
     | '/dashboard/items/'
     | '/posts/$postId/'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr/'
     | '/posts/$postId/edit/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dashboard/discover'
     | '/dashboard/import'
-    | '/demo/drizzle'
     | '/dashboard'
     | '/posts'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/forgot-password'
     | '/login'
     | '/reset-password'
     | '/signup'
     | '/dashboard/items'
     | '/posts/$postId'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr'
     | '/posts/$postId/edit'
   id:
     | '__root__'
@@ -276,23 +188,15 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/discover'
     | '/dashboard/import'
-    | '/demo/drizzle'
     | '/dashboard/'
     | '/posts/'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/_auth/forgot-password/'
     | '/_auth/login/'
     | '/_auth/reset-password/'
     | '/_auth/signup/'
     | '/dashboard/items/'
     | '/posts/$postId/'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr/'
     | '/posts/$postId/edit/'
   fileRoutesById: FileRoutesById
 }
@@ -300,17 +204,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
-  DemoDrizzleRoute: typeof DemoDrizzleRoute
   PostsIndexRoute: typeof PostsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  DemoApiNamesRoute: typeof DemoApiNamesRoute
-  DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
-  DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
   PostsPostIdIndexRoute: typeof PostsPostIdIndexRoute
-  DemoStartSsrDataOnlyRoute: typeof DemoStartSsrDataOnlyRoute
-  DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
-  DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
-  DemoStartSsrIndexRoute: typeof DemoStartSsrIndexRoute
   PostsPostIdEditIndexRoute: typeof PostsPostIdEditIndexRoute
 }
 
@@ -350,13 +246,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRouteRoute
-    }
-    '/demo/drizzle': {
-      id: '/demo/drizzle'
-      path: '/demo/drizzle'
-      fullPath: '/demo/drizzle'
-      preLoaderRoute: typeof DemoDrizzleRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/dashboard/import': {
       id: '/dashboard/import'
@@ -414,27 +303,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
-    '/demo/start/server-funcs': {
-      id: '/demo/start/server-funcs'
-      path: '/demo/start/server-funcs'
-      fullPath: '/demo/start/server-funcs'
-      preLoaderRoute: typeof DemoStartServerFuncsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/api-request': {
-      id: '/demo/start/api-request'
-      path: '/demo/start/api-request'
-      fullPath: '/demo/start/api-request'
-      preLoaderRoute: typeof DemoStartApiRequestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/api/names': {
-      id: '/demo/api/names'
-      path: '/demo/api/names'
-      fullPath: '/demo/api/names'
-      preLoaderRoute: typeof DemoApiNamesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -447,34 +315,6 @@ declare module '@tanstack/react-router' {
       path: '/posts/$postId/edit'
       fullPath: '/posts/$postId/edit/'
       preLoaderRoute: typeof PostsPostIdEditIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/': {
-      id: '/demo/start/ssr/'
-      path: '/demo/start/ssr'
-      fullPath: '/demo/start/ssr/'
-      preLoaderRoute: typeof DemoStartSsrIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/spa-mode': {
-      id: '/demo/start/ssr/spa-mode'
-      path: '/demo/start/ssr/spa-mode'
-      fullPath: '/demo/start/ssr/spa-mode'
-      preLoaderRoute: typeof DemoStartSsrSpaModeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/full-ssr': {
-      id: '/demo/start/ssr/full-ssr'
-      path: '/demo/start/ssr/full-ssr'
-      fullPath: '/demo/start/ssr/full-ssr'
-      preLoaderRoute: typeof DemoStartSsrFullSsrRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/data-only': {
-      id: '/demo/start/ssr/data-only'
-      path: '/demo/start/ssr/data-only'
-      fullPath: '/demo/start/ssr/data-only'
-      preLoaderRoute: typeof DemoStartSsrDataOnlyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -520,17 +360,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
-  DemoDrizzleRoute: DemoDrizzleRoute,
   PostsIndexRoute: PostsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  DemoApiNamesRoute: DemoApiNamesRoute,
-  DemoStartApiRequestRoute: DemoStartApiRequestRoute,
-  DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
   PostsPostIdIndexRoute: PostsPostIdIndexRoute,
-  DemoStartSsrDataOnlyRoute: DemoStartSsrDataOnlyRoute,
-  DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
-  DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,
-  DemoStartSsrIndexRoute: DemoStartSsrIndexRoute,
   PostsPostIdEditIndexRoute: PostsPostIdEditIndexRoute,
 }
 export const routeTree = rootRouteImport
@@ -538,10 +370,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }
