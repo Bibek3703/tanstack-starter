@@ -1,5 +1,6 @@
+import { sendPasswordResetEmail, sendVerificationLinkEmail } from "@/data/email";
 import { db } from "@/db";
-import { betterAuth } from "better-auth";
+import { betterAuth, type User } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
@@ -8,9 +9,40 @@ export const auth = betterAuth({
         provider: "pg",
     }),
     plugins: [tanstackStartCookies()],
+    emailVerification: {
+        sendOnSignUp: true,
+        autoSignInAfterVerification: true,
+        sendVerificationEmail: async ({ user, url }: { user: User; url: string; token: string }) => {
+            void sendVerificationLinkEmail({
+                data: {
+                    email: user.email,
+                    name: user.name,
+                    url
+                }
+            })
+        },
+    },
     emailAndPassword: {
         enabled: true,
-        requireEmailVerification: false
+        requireEmailVerification: true,
+        sendResetPassword: async ({ user, url }: { user: User; url: string; token: string }) => {
+            console.log("sendResetPassword called with request:", url);
+            void sendPasswordResetEmail({
+                data: {
+                    email: user.email,
+                    name: user.name,
+                    url
+                }
+            })
+        },
+        onPasswordReset: async ({ user }, request) => {
+            // your logic here
+            console.log(`Password for user ${user.email} has been reset. ${request}`);
+        },
+        errorMessages: {
+            invalidCredentials: "The email or password you entered is incorrect.",
+            unverifiedEmail: "Please verify your email address to continue.",
+        }
     },
     socialProviders: {
         // github: {

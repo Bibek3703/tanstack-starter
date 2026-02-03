@@ -22,3 +22,17 @@ export const signupSchema = z.object({
         ),
     password: z.string().min(8, "Password must be at least 8 characters long"),
 });
+
+export const forgotPasswordSchema = z.object({
+    email: z
+        .string()
+        .min(1, { message: "Email is required" })
+        .regex(
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            { message: "Invalid email address" }
+        ),
+});
+
+export const resetPasswordSchema = z.object({
+    password: z.string().min(8, "Password must be at least 8 characters long"),
+});

@@ -33,7 +33,7 @@ export function SignupForm({
         },
         onSubmit: ({ value }) => {
             startTransition(async () => {
-                handleSignUp(value)
+                await handleSignUp(value)
             })
         }
     })
@@ -131,7 +131,7 @@ export function SignupForm({
                 </Field>
                 <Button type="submit" variant="secondary" size="lg" disabled={isPending} className="cursor-pointer">
                     {isPending && <Loader2Icon className="animate-spin" />}
-                    Login
+                    Sign Up
                 </Button>
                 <FieldDescription className="text-center">
                     Already have an account? <Link to="/login">Sign in</Link>

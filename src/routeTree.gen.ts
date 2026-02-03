@@ -20,7 +20,9 @@ import { Route as DashboardDiscoverRouteImport } from './routes/dashboard/discov
 import { Route as PostsPostIdIndexRouteImport } from './routes/posts/$postId/index'
 import { Route as DashboardItemsIndexRouteImport } from './routes/dashboard/items/index'
 import { Route as AuthSignupIndexRouteImport } from './routes/_auth/signup/index'
+import { Route as AuthResetPasswordIndexRouteImport } from './routes/_auth/reset-password/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
+import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
@@ -85,9 +87,19 @@ const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
   path: '/signup/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
+  id: '/reset-password/',
+  path: '/reset-password/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
+  id: '/forgot-password/',
+  path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
@@ -148,7 +160,9 @@ export interface FileRoutesByFullPath {
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/login/': typeof AuthLoginIndexRoute
+  '/reset-password/': typeof AuthResetPasswordIndexRoute
   '/signup/': typeof AuthSignupIndexRoute
   '/dashboard/items/': typeof DashboardItemsIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
@@ -169,7 +183,9 @@ export interface FileRoutesByTo {
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/login': typeof AuthLoginIndexRoute
+  '/reset-password': typeof AuthResetPasswordIndexRoute
   '/signup': typeof AuthSignupIndexRoute
   '/dashboard/items': typeof DashboardItemsIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
@@ -193,7 +209,9 @@ export interface FileRoutesById {
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
+  '/_auth/reset-password/': typeof AuthResetPasswordIndexRoute
   '/_auth/signup/': typeof AuthSignupIndexRoute
   '/dashboard/items/': typeof DashboardItemsIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
@@ -217,7 +235,9 @@ export interface FileRouteTypes {
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/forgot-password/'
     | '/login/'
+    | '/reset-password/'
     | '/signup/'
     | '/dashboard/items/'
     | '/posts/$postId/'
@@ -238,7 +258,9 @@ export interface FileRouteTypes {
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/dashboard/items'
     | '/posts/$postId'
@@ -261,7 +283,9 @@ export interface FileRouteTypes {
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/_auth/forgot-password/'
     | '/_auth/login/'
+    | '/_auth/reset-password/'
     | '/_auth/signup/'
     | '/dashboard/items/'
     | '/posts/$postId/'
@@ -369,11 +393,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_auth/reset-password/': {
+      id: '/_auth/reset-password/'
+      path: '/reset-password'
+      fullPath: '/reset-password/'
+      preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/_auth/login/': {
       id: '/_auth/login/'
       path: '/login'
       fullPath: '/login/'
       preLoaderRoute: typeof AuthLoginIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/forgot-password/': {
+      id: '/_auth/forgot-password/'
+      path: '/forgot-password'
+      fullPath: '/forgot-password/'
+      preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
     '/demo/start/server-funcs': {
@@ -443,12 +481,16 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthRouteRouteChildren {
+  AuthForgotPasswordIndexRoute: typeof AuthForgotPasswordIndexRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
+  AuthResetPasswordIndexRoute: typeof AuthResetPasswordIndexRoute
   AuthSignupIndexRoute: typeof AuthSignupIndexRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthForgotPasswordIndexRoute: AuthForgotPasswordIndexRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
+  AuthResetPasswordIndexRoute: AuthResetPasswordIndexRoute,
   AuthSignupIndexRoute: AuthSignupIndexRoute,
 }
 
