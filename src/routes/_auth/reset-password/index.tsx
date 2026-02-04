@@ -1,11 +1,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import ResetPasswordForm from '@/components/web/reset-password-form'
-import { resetPasswordSearchParamsSchema } from '@/schemas/searchParams'
 import { createFileRoute } from '@tanstack/react-router'
+import z from 'zod'
 
 export const Route = createFileRoute('/_auth/reset-password/')({
     component: RouteComponent,
-    validateSearch: resetPasswordSearchParamsSchema,
+    validateSearch: z.object({
+        token: z.string()
+    }),
 })
 
 function RouteComponent() {
