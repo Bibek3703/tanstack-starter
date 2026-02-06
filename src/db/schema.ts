@@ -1,6 +1,6 @@
 import { user } from 'auth-schema'
 import { relations } from 'drizzle-orm';
-import { pgEnum, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core'
+import { pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
 export * from './auth-schema'
 
 export const TodoStatuses = ['PENDING', 'COMPLETED', 'SCHEDULED', 'ARCHIVED'] as const;
@@ -8,7 +8,7 @@ export const TodoStatuses = ['PENDING', 'COMPLETED', 'SCHEDULED', 'ARCHIVED'] as
 export const TodoStatusEnum = pgEnum('post_status', TodoStatuses);
 
 export const todo = pgTable('todo', {
-  id: serial().primaryKey(),
+  id: uuid().primaryKey().defaultRandom(),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),

@@ -43,10 +43,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Label } from "../ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem } from "../ui/pagination"
-import { BookmarkIcon, Loader2Icon, Search } from "lucide-react"
+import { BookmarkIcon, Loader2Icon, Search, Trash2Icon } from "lucide-react"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "../ui/empty"
 import { Skeleton } from "../ui/skeleton"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group"
+import DeleteDialog from "./delete-dialog"
 
 interface DataTableProps<TData extends { id: string | number }, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -59,6 +60,8 @@ interface DataTableProps<TData extends { id: string | number }, TValue> {
     searchInputLoading?: boolean
     searchQuery?: string
     onSearchQueryChange?: (value: string) => void
+    onAddNew?: () => void
+    onDeleteItems?: (selectedIds: (string | number)[]) => void
 }
 
 function DraggableRow<TData extends { id: string | number }>({ row }: { row: Row<TData> }) {
@@ -236,7 +239,9 @@ function DataTable<TData extends { id: string | number }, TValue>({
     searchInputPlaceholder = "Search...",
     searchInputLoading = false,
     searchQuery = "",
-    onSearchQueryChange = () => { }
+    onSearchQueryChange = () => { },
+    onAddNew = () => { },
+    onDeleteItems = () => { },
 }: DataTableProps<TData, TValue>) {
     const [data, setData] = React.useState(() => initialData)
     const [rowSelection, setRowSelection] = React.useState({})
@@ -246,6 +251,7 @@ function DataTable<TData extends { id: string | number }, TValue>({
         []
     )
     const [sorting, setSorting] = React.useState<SortingState>([])
+    const [open, setOpen] = React.useState<boolean>(false)
     // const [pagination, setPagination] = React.useState({
     //     pageIndex: 0,
     //     pageSize: 10,
@@ -325,6 +331,11 @@ function DataTable<TData extends { id: string | number }, TValue>({
                     </InputGroupAddon>}
                 </InputGroup>
                 <div className="flex items-center gap-2 ml-auto">
+                    {table.getFilteredSelectedRowModel().rows.length > 0 && <DeleteDialog
+                        open={open}
+                        onOpenChange={setOpen}
+                        onConfirm={() => onDeleteItems(table.getFilteredSelectedRowModel().rows.map((row) => row.original.id))}
+                    />}
                     <DropdownMenu>
                         <DropdownMenuTrigger
                             render={<Button variant="outline" size="sm">
@@ -357,7 +368,7 @@ function DataTable<TData extends { id: string | number }, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={onAddNew}>
                         <IconPlus />
                         <span className="hidden lg:inline">Add New</span>
                     </Button>
