@@ -23,15 +23,17 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar"
 import useAuth from "@/hooks/use-auth"
-import { type User } from "better-auth"
 import { getAvatarColor } from "@/lib/auth-helpers"
+import { getSession } from "@/data/session"
+import { use } from "react"
 
 
 interface NavUserProps {
-    user: User
+    sessionData: ReturnType<typeof getSession>
 }
 
-export function NavUser({ user }: NavUserProps) {
+export function NavUser({ sessionData }: NavUserProps) {
+    const { user } = use(sessionData)
     const { isMobile } = useSidebar()
     const { handleSignOut } = useAuth()
 

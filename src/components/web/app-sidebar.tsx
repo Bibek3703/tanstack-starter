@@ -1,8 +1,5 @@
-import * as React from "react"
 import {
     BookmarkIcon,
-    CompassIcon,
-    ImportIcon,
     LayoutDashboardIcon,
     Settings2,
     User2Icon,
@@ -21,7 +18,9 @@ import {
 } from "@/components/ui/sidebar"
 import { Link, linkOptions } from "@tanstack/react-router"
 import NavPrimary, { NavPrimaryItemType } from "./nav-primary"
-import { type User } from "better-auth"
+import { getSession } from "@/data/session"
+import { Skeleton } from "../ui/skeleton"
+import { Suspense } from "react"
 
 
 const navItems: NavPrimaryItemType[] = linkOptions([
@@ -51,8 +50,19 @@ const navItems: NavPrimaryItemType[] = linkOptions([
     },
 ])
 
+const NavUserSkelton = () => {
+    return (
+        <div className="flex items-center gap-2 bg-muted p-2 py-3">
+            <Skeleton className="size-8 rounded-full bg-muted-foreground/60" />
+            <div className="flex flex-col gap-1">
+                <Skeleton className="w-20 h-3 bg-muted-foreground/60" />
+                <Skeleton className="w-32 h-2 bg-muted-foreground/30" />
+            </div>
+        </div>
+    )
+}
 
-export function AppSidebar({ user }: { user: User }) {
+export function AppSidebar({ sessionData }: { sessionData: ReturnType<typeof getSession> }) {
 
     return (
         <Sidebar collapsible="icon">
@@ -84,7 +94,9 @@ export function AppSidebar({ user }: { user: User }) {
                 <NavPrimary navs={navItems} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={user} />
+                <Suspense fallback={<NavUserSkelton />}>
+                    <NavUser sessionData={sessionData} />
+                </Suspense>
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

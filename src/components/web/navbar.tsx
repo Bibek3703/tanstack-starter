@@ -3,6 +3,7 @@ import ModeToggle from './mode-toggle'
 import { Button, buttonVariants } from '../ui/button'
 import { authClient } from '@/lib/auth-client'
 import useAuth from '@/hooks/use-auth'
+import { Skeleton } from '../ui/skeleton'
 
 export function Navbar() {
     const { data: session, isPending } = authClient.useSession()
@@ -16,7 +17,10 @@ export function Navbar() {
             </div>
             <div className='flex-1 flex justify-end gap-3 items-center'>
                 <ModeToggle />
-                {isPending ? null : session ? (
+                {isPending ? <>
+                    <Skeleton className='w-18 h-8' />
+                    <Skeleton className='w-20 h-8' />
+                </> : session ? (
                     <>
                         <Button
                             variant='secondary'

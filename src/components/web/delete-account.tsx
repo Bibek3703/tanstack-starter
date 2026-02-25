@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { use } from 'react'
 import { Button } from '../ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Field, FieldError, FieldGroup } from '../ui/field'
@@ -7,10 +7,11 @@ import { deleteAccountSchema } from '@/schemas/auth'
 import { Input } from '../ui/input'
 import useSettings from '@/hooks/use-settings'
 import { Loader2Icon } from 'lucide-react'
-import { type User } from 'better-auth'
 import { toast } from 'sonner'
+import { getSession } from '@/data/session'
 
-function DeleteAccount({ user }: { user: User }) {
+function DeleteAccount({ sessionData }: { sessionData: ReturnType<typeof getSession> }) {
+    const { user } = use(sessionData)
     const { handleDeleteAccount } = useSettings()
     const [open, setOpen] = React.useState(false)
     const [isPending, startTransition] = React.useTransition()

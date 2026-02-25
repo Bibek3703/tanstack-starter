@@ -1,17 +1,17 @@
 import { userInputSchema } from '@/schemas/user'
 import { useForm } from '@tanstack/react-form'
-import React from 'react'
+import React, { use } from 'react'
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '../ui/field'
 import { Input } from '../ui/input'
-import { type User } from 'better-auth'
 import { Button } from '../ui/button'
 import { Loader2Icon, UserIcon } from 'lucide-react'
 import { updateUser } from '@/data/user'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { getAvatarColor } from '@/lib/auth-helpers'
+import { getSession } from '@/data/session'
 
-function ProfileForm({ user }: { user: User }) {
-
+function ProfileForm({ sessionData }: { sessionData: ReturnType<typeof getSession> }) {
+    const { user } = use(sessionData)
     const [isPending, startTransition] = React.useTransition()
     const [image, setImage] = React.useState<File | null>(null)
 
