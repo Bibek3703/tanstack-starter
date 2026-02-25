@@ -9,6 +9,7 @@ export const auth = betterAuth({
         provider: "pg",
     }),
     plugins: [tanstackStartCookies()],
+    baseURL: process.env.BETTER_AUTH_URL,
     user: {
         changeEmail: {
             enabled: true,
@@ -76,6 +77,8 @@ export const auth = betterAuth({
         //     clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         // },
         google: {
+            accessType: "offline",
+            prompt: "select_account consent",
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }

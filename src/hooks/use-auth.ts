@@ -97,7 +97,21 @@ function useAuth() {
         }
     }
 
-    return { handleSignOut, handleSignUp, handleSignIn, handleRequestPasswordReset, handlePasswordReset }
+    const handleGoogleSignIn = async () => {
+        await authClient.signIn.social({
+            provider: "google",
+        })
+    }
+
+
+    return {
+        handleSignOut,
+        handleSignUp,
+        handleSignIn,
+        handleRequestPasswordReset,
+        handlePasswordReset,
+        handleGoogleSignIn
+    }
 }
 
 export default useAuth
